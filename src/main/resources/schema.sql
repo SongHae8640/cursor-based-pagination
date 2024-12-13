@@ -7,3 +7,4 @@ create table tb_member (
     last_active_at timestamp(6),
     primary key (seq)
 );
+CREATE INDEX idx_member_last_active_at ON tb_member(last_active_at);

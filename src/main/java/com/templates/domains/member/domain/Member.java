@@ -41,4 +41,8 @@ public class Member {
         this.name = name;
         this.lastActiveAt = LocalDateTime.now();
     }
+
+    public void updateLastActiveAt(LocalDateTime localDateTime) {
+        this.lastActiveAt = localDateTime;
+    }
 }

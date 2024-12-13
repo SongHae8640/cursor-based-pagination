@@ -3,6 +3,7 @@ package com.templates.global.security.controller;
 import com.templates.global.security.annotation.Auth;
 import com.templates.global.security.controller.dto.LoginRequest;
 import com.templates.global.security.controller.dto.MemberInfo;
+import com.templates.global.security.service.CustomUserDetailsService.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,13 +29,14 @@ public class AuthController {
   private final AuthenticationManager authenticationManager;
 
   @PostMapping("/login")
-  public void login(@RequestBody @Validated LoginRequest request, HttpSession session) {
+  public MemberInfo login(@RequestBody @Validated LoginRequest request, HttpSession session) {
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.loginId(), request.password())
     );
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
     session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+    return MemberInfo.of((CustomUserDetails) authentication.getPrincipal());
   }
 
   @PostMapping("/logout")
